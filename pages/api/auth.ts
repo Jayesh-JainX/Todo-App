@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method == "POST") {
     const { userId, email } = req.body;
 
     if (!userId || !email) {
