@@ -9,13 +9,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { File } from "lucide-react";
 import Link from "next/link";
-import { auth } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
+
+interface Note {
+  id: string;
+  title: string;
+  description: string;
+}
 
 const NotePage = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   const handleUserAuth = async (user: any) => {
     if (user) {
@@ -57,18 +63,6 @@ const NotePage = () => {
 
   return (
     <div>
-      <div className="p-8 pt-[15vh]">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold">Your Notes</h1>
-          <p className="mt-2 text-lg text-muted-foreground">
-            Manage and create new notes here.
-          </p>
-          <Button asChild className="mt-4">
-            <Link href="/new">Create a new Note</Link>
-          </Button>
-        </div>
-      </div>
-
       {notes.length === 0 ? (
         <div className="flex items-center justify-center h-screen">
           <div className="flex flex-col items-center justify-center p-6 rounded-md border border-dashed text-center">
@@ -90,16 +84,29 @@ const NotePage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-4 pl-[2vh] pr-[2vh]  justify-center pb-[10vh]">
-          {notes.map((note) => (
-            <Card key={note.id} className="w-[350px]">
-              <CardHeader>
-                <CardTitle>{note.title}</CardTitle>
-              </CardHeader>
-              <CardContent>{note.description}</CardContent>
-              <CardFooter></CardFooter>
-            </Card>
-          ))}
+        <div>
+          <div className="p-8 pt-[15vh]">
+            <div className="mb-8 text-center">
+              <h1 className="text-3xl font-bold">Your Notes</h1>
+              <p className="mt-2 text-lg text-muted-foreground">
+                Manage and create new notes here.
+              </p>
+              <Button asChild className="mt-4">
+                <Link href="/new">Create a new Note</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-4 pl-[2vh] pr-[2vh]  justify-center pb-[10vh]">
+            {notes.map((note) => (
+              <Card key={note.id} className="w-[350px]">
+                <CardHeader>
+                  <CardTitle>{note.title}</CardTitle>
+                </CardHeader>
+                <CardContent>{note.description}</CardContent>
+                <CardFooter></CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
     </div>

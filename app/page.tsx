@@ -5,13 +5,14 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
+  User,
   onAuthStateChanged,
 } from "firebase/auth";
 import { app } from "@/firebase";
 import NotePage from "./components/NotePage";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -27,7 +28,7 @@ export default function Home() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
     } catch (error) {
-      console.error("Error signing in with Google:", error.message);
+      console.error("Error signing in with Google:", (error as Error).message);
     }
   };
 

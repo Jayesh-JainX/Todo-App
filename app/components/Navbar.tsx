@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react"; // Import useState
+import { useState, useEffect } from "react"; // Import useEffect
 import Link from "next/link";
 import { ModeToggle } from "./Modetoogle";
 import { Button } from "@/components/ui/button";
@@ -12,13 +12,18 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { app } from "@/firebase";
+import { User } from "firebase/auth"; // Import User type
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null); // Explicitly specify type as User | null
 
-  onAuthStateChanged(getAuth(app), (currentUser) => {
-    setUser(currentUser);
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(getAuth(app), (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -28,7 +33,7 @@ const Navbar = () => {
       const currentUser = result.user;
       setUser(currentUser);
     } catch (error) {
-      console.error("Error signing in with Google:", error.message);
+      console.error("Error signing in with Google:", (error as Error).message);
     }
   };
 
@@ -39,7 +44,7 @@ const Navbar = () => {
       setUser(null);
       console.log("User signed out successfully");
     } catch (error) {
-      console.error("Error signing out:", error.message);
+      console.error("Error signing out:", (error as Error).message);
     }
   };
 
