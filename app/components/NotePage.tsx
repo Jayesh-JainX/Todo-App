@@ -11,6 +11,7 @@ import { File } from "lucide-react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Note {
   id: string;
@@ -65,7 +66,32 @@ const NotePage = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <div className="pt-[15vh] flex flex-col space-y-3 items-center m-2">
+          <div className="space-y-3 flex flex-col items-center">
+            <Skeleton className="h-6 w-[150px]" />
+            <Skeleton className="h-4 w-[300px]" />
+            <Skeleton className="h-10 w-[150px] rounded-md" />
+          </div>
+        </div>
+        <p></p>
+        <div className="pt-[5vh] flex flex-wrap justify-center gap-3">
+          {Array.from({ length: 15 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col space-y-3 items-center m-2"
+            >
+              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
