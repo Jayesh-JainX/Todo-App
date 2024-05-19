@@ -41,7 +41,7 @@ export default function NewNoteRoute() {
     }
 
     try {
-      const response = await fetch("/api/notes", {
+      const response = await fetch("/api/note", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -27,23 +27,30 @@ const NotePage = () => {
     if (user) {
       setUser(user);
 
-      await fetch("/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          email: user.email,
-        }),
-      });
+      try {
+        await fetch("/api/auth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user.uid,
+            email: user.email,
+          }),
+        });
 
-      const response = await fetch(`/api/notes?userId=${user.uid}`);
-      if (response.ok) {
-        const data = await response.json();
-        setNotes(data.notes);
-      } else {
-        console.error("Failed to fetch notes:", response.statusText);
+        const response = await fetch(`/api/notes?userId=${user.uid}`);
+        if (response.ok) {
+          const data = await response.json();
+          setNotes(data.notes);
+        } else {
+          console.error("Failed to fetch notes:", response.statusText);
+        }
+      } catch (error) {
+        console.error(
+          "Error during authentication or fetching notes:",
+          (error as Error).message
+        );
       }
     }
     setLoading(false);
@@ -69,7 +76,6 @@ const NotePage = () => {
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
               <File className="w-8 h-8 text-primary" />
             </div>
-
             <h2 className="mt-4 text-xl font-semibold">
               You don&apos;t have any notes created
             </h2>
@@ -77,7 +83,6 @@ const NotePage = () => {
               You currently don&apos;t have any notes. Please create some to see
               them here.
             </p>
-
             <Button asChild className="w-full">
               <Link href="/new">Create a new Note</Link>
             </Button>
@@ -96,7 +101,7 @@ const NotePage = () => {
               </Button>
             </div>
           </div>
-          <div className="flex flex-wrap gap-4 pl-[2vh] pr-[2vh]  justify-center pb-[10vh]">
+          <div className="flex flex-wrap gap-4 pl-[2vh] pr-[2vh] justify-center pb-[10vh]">
             {notes.map((note) => (
               <Card key={note.id} className="w-[350px]">
                 <CardHeader>

@@ -1,4 +1,3 @@
-// pages/api/auth.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/app/lib/db";
 
@@ -6,7 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method == "POST") {
+  if (req.method === "POST") {
     const { userId, email } = req.body;
 
     if (!userId || !email) {
@@ -25,6 +24,7 @@ export default async function handler(
 
       return res.status(200).json({ user });
     } catch (error) {
+      console.error("Error upserting user:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {

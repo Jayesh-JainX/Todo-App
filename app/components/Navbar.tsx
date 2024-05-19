@@ -57,13 +57,13 @@ const Navbar = () => {
           </h1>
         </Link>
 
-        <div className="flex items-center ml-3 gap-2 sm:gap-5 pr-4 m0">
+        <div className="flex items-center ml-3 gap-2 sm:gap-5 pr-4 m-0">
           <ModeToggle />
           <div className="flex items-center sm:gap-5">
             {user ? (
               <Button
                 variant="secondary"
-                className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 sm:gap-3 text-sm sm:text-base w-full sm:w-auto"
+                className="flex items-center justify-end gap-2 px-3 py-2 sm:px-4 sm:py-2 sm:gap-3 text-sm sm:text-base w-full sm:w-auto"
                 onClick={handleLogout}
               >
                 Logout

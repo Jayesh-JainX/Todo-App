@@ -41,4 +41,4 @@ if (!getApps().length) {
   storage = getStorage(app);
 }
 
-export { app, auth, analytics, storage };
+export { app, auth };
