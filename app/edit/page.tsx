@@ -1,3 +1,4 @@
+"use client";
 import { FC, useState } from "react";
 import {
   Card,
@@ -48,7 +49,7 @@ const EditNotePage: FC<EditNotePageProps> = ({
 
       if (response.ok) {
         const updatedNote = await response.json();
-        setNotes((prevNotes) =>
+        setNotes((prevNotes: Note[]) =>
           prevNotes.map((n) => (n.id === note.id ? updatedNote.note : n))
         );
         setEditingNote(null);
