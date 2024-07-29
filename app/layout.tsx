@@ -5,12 +5,14 @@ import { ThemeProvider } from "./components/theme-provider";
 import NextTopLoader from "nextjs-toploader";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Todo App",
-  description: "Manage tasks effortlessly with our intuitive Todo App. Organize your day, set reminders, and stay on top of your priorities with ease!",
+  description:
+    "Manage tasks effortlessly with our intuitive Todo App. Organize your day, set reminders, and stay on top of your priorities with ease!",
 };
 
 export default function RootLayout({
@@ -42,6 +44,7 @@ export default function RootLayout({
           <Navbar />
 
           {children}
+          <Toaster />
           <Analytics />
         </ThemeProvider>
       </body>

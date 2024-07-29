@@ -16,16 +16,18 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { redirectHome } from "../components/Rediect";
+import { Loader2 } from "lucide-react";
 
 export default function NewNoteRoute() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [user, setUser] = useState<User | null>(null); // Provide correct type annotation
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser); // Use currentUser instead of user
+        setUser(currentUser);
       }
     });
 
@@ -34,9 +36,11 @@ export default function NewNoteRoute() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!user) {
       console.error("User is not authenticated");
+      setLoading(false);
       return;
     }
 
@@ -50,17 +54,19 @@ export default function NewNoteRoute() {
       });
 
       if (response.ok) {
-        return redirectHome();
+        redirectHome();
       } else {
         console.error("Failed to create note:", response.statusText);
       }
     } catch (error) {
       console.error("Error creating note:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen p-2">
       <Card className="w-full max-w-md">
         <form onSubmit={handleSubmit}>
           <CardHeader>
@@ -101,7 +107,14 @@ export default function NewNoteRoute() {
             <Button asChild variant="destructive">
               <Link href="/">Cancel</Link>
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="flex items-center"
+            >
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {loading ? "Please wait" : "Submit"}
+            </Button>
           </CardFooter>
         </form>
       </Card>

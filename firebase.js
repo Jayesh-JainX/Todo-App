@@ -14,13 +14,12 @@ let storage;
 
 if (!getApps().length) {
   const firebaseConfig = {
-    apiKey: "AIzaSyB5OUUOdhiNlMC87S6GjSOb976GfLkCjgY",
-    authDomain: "fir-d51bd.firebaseapp.com",
-    projectId: "fir-d51bd",
-    storageBucket: "fir-d51bd.appspot.com",
-    messagingSenderId: "503432138541",
-    appId: "1:503432138541:web:ab6d932d188e3724978da4",
-    measurementId: "G-MMWZ5TG3PR",
+    apiKey: "AIzaSyDW-wPv5rwZoK5zU6JS0oa5kb8WITDxPhw",
+    authDomain: "my-blog-o.firebaseapp.com",
+    projectId: "my-blog-o",
+    storageBucket: "my-blog-o.appspot.com",
+    messagingSenderId: "189317823985",
+    appId: "1:189317823985:web:d5c7b759a73953fe239850",
   };
 
   app = initializeApp(firebaseConfig);

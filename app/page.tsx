@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { app } from "@/firebase";
 import NotePage from "./components/NotePage";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
