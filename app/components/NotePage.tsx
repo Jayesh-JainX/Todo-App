@@ -12,8 +12,8 @@ import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ShowNotePage } from "../show/page";
-import EditNotePage from "../edit/page";
+import { ShowNotePage } from "../show/show_page";
+import EditNotePage from "../edit/edit_page";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -25,7 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input"; // Import Input from Shadcn
+import { Input } from "@/components/ui/input";
 
 interface Note {
   id: string;
