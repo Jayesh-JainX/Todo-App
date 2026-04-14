@@ -1,16 +1,17 @@
-import { initializeApp, getApps } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
+import { getAnalytics, type Analytics } from "firebase/analytics";
 import {
   getAuth,
   setPersistence,
   browserLocalPersistence,
+  type Auth,
 } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { getStorage, type FirebaseStorage } from "firebase/storage";
 
-let app;
-let analytics;
-let auth;
-let storage;
+let app: FirebaseApp;
+let analytics: Analytics;
+let auth: Auth;
+let storage: FirebaseStorage;
 
 if (!getApps().length) {
   const firebaseConfig = {
@@ -38,6 +39,13 @@ if (!getApps().length) {
   }
 
   storage = getStorage(app);
+} else {
+  app = getApps()[0];
+  auth = getAuth(app);
+  storage = getStorage(app);
+  if (typeof window !== "undefined") {
+    analytics = getAnalytics(app);
+  }
 }
 
 export { app, auth };
